@@ -7,7 +7,7 @@ export default (server: http.Server) => {
       allowedHeaders: ["my-custom-header"],
       credentials: true,
     },
-  });
+  })
   io.on("connection", (socket) => {
     console.log("user connected");
     socket.on("join", (peerId,roomId,video) => {
@@ -21,11 +21,6 @@ export default (server: http.Server) => {
         })
       });
       
-    socket.on("user-leave",(stream,roomId)=>{
-        console.log("user-leave",stream.id)
-
-        socket.broadcast.to(roomId).emit("user-leave",stream)
-    })
   });
 
 
