@@ -15,11 +15,15 @@ export default (server: http.Server) => {
         console.log(peerId)
         console.log(video)
         socket.broadcast.to(roomId).emit("user-connected",peerId)
+        socket.on("new-message",(writer,content)=>{
+            socket.broadcast.to(roomId).emit("recieve-message",writer,content)
+          })
         socket.on("disconnect",()=>{
             socket.broadcast.to(roomId).emit("user-leave",peerId)
             console.log("v-",peerId)
         })
       });
+      
       
   });
 
